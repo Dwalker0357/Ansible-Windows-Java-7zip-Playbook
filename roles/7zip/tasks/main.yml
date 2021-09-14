@@ -1,0 +1,33 @@
+- name: Create 7zip_Update Directory on Windows Host
+  ansible.legacy.win_shell: New-Item -Path "C:\Users\ansible" -Name "7zip_Update" -ItemType "directory"
+  args:
+    executable: powershell
+
+
+- name: Copy Latest 7zip.exe from Localhost To Windows Host
+  ansible.windows.win_copy:
+    src: 7zip.exe
+    dest: C:\Users\ansible\7zip_Update
+    remote_src: no
+
+
+- name: Uninstall Old Version of 7zip On Windows Host
+  win_package:
+    path: C:\Program Files\7-Zip\Uninstall.exe
+    product_id: 7-Zip
+    arguments: /S
+    state: absent
+
+
+- name: Install 7zip From Windows Host Directory
+  win_package:
+    path: C:\Users\ansible\7zip_Update\7zip.exe
+    product_id: 7-Zip
+    arguments: /S
+    state: present
+
+
+- name: Remove 7zip Install Folder On Windows Host
+  ansible.legacy.win_shell: Remove-Item "C:\Users\ansible\7zip_Update" -Recurse
+  args:
+    executable: powershell

@@ -1,0 +1,23 @@
+all:
+  children:
+    Test_VM:
+      hosts:
+        172.19.208.5:
+
+
+
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    ansible_user: ansible
+    ansible_ssh_private_key_file: '/home/ansible/.ssh/id_rsa'
+    ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31376234663162326432336330396638326636363136663761343832613736356165376334373934
+          3734616132343466326632316133633233303864383963370a633863633531663438626637316334
+          61353135643166616234326164646432613532633536303165623963333933616530363734656564
+          3865383162363366340a613730633166313136363930666563616462303333353038633164343436
+          3031
+    ansible_become_user: ansible
+    ansible_become_method: runas
+    ansible_shell_type: powershell
+    ansible_connection: ssh

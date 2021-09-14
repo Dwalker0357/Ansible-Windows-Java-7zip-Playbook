@@ -1,0 +1,32 @@
+- name: Create Java_Update Directory on Windows Host
+  ansible.legacy.win_shell: New-Item -Path "C:\Users\ansible" -Name "Java_Update" -ItemType "directory"
+  args:
+    executable: powershell
+
+
+- name: Copy Latest Java.exe from Localhost To Windows Host
+  ansible.windows.win_copy:
+    src: Java.exe
+    dest: C:\Users\ansible\Java_Update
+    remote_src: no
+
+
+- name: Copy config file from Localhost To Windows Host
+  ansible.windows.win_copy:
+    src: config
+    dest: C:\Users\ansible\Java_Update
+    remote_src: no
+
+
+- name: Uninstall Old Java From Windows Host 
+  win_command: wmic product where 'Name="Java 8"' uninstall
+
+
+- name: Install Java From Windows Host Directory
+  win_command: C:\Users\ansible\Java_Update\Java.exe INSTALLCFG=C:\Users\ansible\Java_Update\config
+  
+
+- name: Remove Java_Update Install Folder On Windows Host
+  ansible.legacy.win_shell: Remove-Item "C:\Users\ansible\Java_Update" -Recurse
+  args:
+    executable: powershell
