@@ -1,6 +1,0 @@
-- name: 7Zip Update
-  become: true
-  hosts: Test_VM
-  roles:
-  - 7zip
-  - Java
