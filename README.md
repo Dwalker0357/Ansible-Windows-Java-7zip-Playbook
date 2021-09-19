@@ -273,7 +273,6 @@ Ansible Vault encrypts variables and files so you can protect sensitive content 
 2. Create a vault password within the file e.g. password123.
 
 3. Enter the vm ansible account password into the vault using the command:
-<br>
 ansible-vault encrypt_string --vault-id file_path_to_password_file --name 'VM_Host_Name'
 
 4. Copy and paste the ansible password for the remote windows user account into the command line. 
@@ -285,6 +284,5 @@ ansible-vault encrypt_string --vault-id file_path_to_password_file --name 'VM_Ho
 7. Place that new password string into your ansible_password variable in your host file
 
 8. Run playbooks with the following command to use the vaulted passwords: 
-<br>
 ansible-playbook playbook.yaml -i inventory.yaml --vault-password-file password.txt
 
